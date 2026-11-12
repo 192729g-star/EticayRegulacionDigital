@@ -1,0 +1,1053 @@
+```html
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ética, Privacidad y Regulación Digital - Universidad Piloto de Colombia</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QRCode.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            dark: '#0f172a',
+                            gold: '#d97706'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark-glass {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-cyan-500 selection:text-white custom-scrollbar">
+
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-1.5 bg-slate-200 z-50">
+        <div id="scrollProgress" class="h-full bg-gradient-to-r from-cyan-500 to-indigo-600 w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glassmorphism border-b border-slate-200/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-900 to-brand-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-cyan-500/20">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold tracking-wider text-brand-500 uppercase block">Artefacto Educativo Digital</span>
+                        <span class="text-lg font-bold text-slate-900 leading-tight">UniPiloto | ÉTICA DIGITAL</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    <a href="#inicio" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Inicio</a>
+                    <a href="#fundamentos" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Fundamentos</a>
+                    <a href="#privacidad" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Privacidad</a>
+                    <a href="#normativa" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Normativa</a>
+                    <a href="#riesgos" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Riesgos</a>
+                    <a href="#ia-etica" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">IA & Ética</a>
+                    <a href="#casos" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Casos Real</a>
+                    <a href="#taller" class="px-3 py-2 rounded-lg hover:text-brand-500 hover:bg-slate-100 transition">Evaluación</a>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleQRModal()" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-brand-900 bg-brand-50 hover:bg-brand-100 border border-brand-200 rounded-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-qrcode text-brand-500 text-sm"></i> QR App
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 text-sm font-medium">
+            <a href="#inicio" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">1. Inicio</a>
+            <a href="#fundamentos" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">2. Fundamentos Éticos</a>
+            <a href="#privacidad" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">3. Privacidad y Protección</a>
+            <a href="#normativa" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">4. Marco Normativo (Colombia)</a>
+            <a href="#riesgos" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">5. Problemáticas Digitales</a>
+            <a href="#ia-etica" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">6. IA y Responsabilidad</a>
+            <a href="#casos" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">7. Casos Empresariales</a>
+            <a href="#taller" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">8. Taller Interactivo</a>
+            <a href="#conclusiones" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">9. Conclusiones</a>
+            <a href="#bibliografia" onclick="closeMobileMenu()" class="block px-3 py-2 rounded-md text-slate-700 hover:bg-slate-100">10. Referencias APA 7</a>
+        </div>
+    </header>
+
+    <!-- SECCIÓN 1: INICIO -->
+    <section id="inicio" class="relative min-h-[90vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden py-16">
+        <!-- Background Grid Graphic -->
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    Universidad Piloto de Colombia • Artefacto Educativo
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Ética, Privacidad y <br class="hidden sm:inline"/>
+                    <span class="gradient-text">Regulación Digital</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-300 font-light max-w-2xl">
+                    Hacia un ecosistema tecnológico transparente: Garantizando la integridad informativa y la soberanía de los datos personales en la sociedad hiperconectada.
+                </p>
+
+                <!-- Academic Objective Box -->
+                <div class="p-5 rounded-2xl dark-glass border border-slate-700/60 text-left space-y-2">
+                    <div class="flex items-center gap-2 text-cyan-400 font-semibold text-sm uppercase tracking-wider">
+                        <i class="fa-solid fa-bullseye"></i> Objetivo Académico de Aprendizaje
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed italic">
+                        «Reflexionar analíticamente sobre los aspectos éticos, legales y normativos que rigen el tratamiento masivo de información, evaluando los impactos sociales, organizacionales e individuales del uso de datos.»
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                    <a href="#fundamentos" class="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-base shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all">
+                        Iniciar Recorrido Didáctico <i class="fa-solid fa-arrow-right ml-3"></i>
+                    </a>
+                    <a href="#taller" class="inline-flex items-center justify-center px-6 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-base transition">
+                        <i class="fa-solid fa-vial-circle-check mr-2 text-cyan-400"></i> Evaluación Práctica
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Digital Sphere Canvas Representation -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md aspect-square rounded-3xl dark-glass border border-cyan-500/30 p-6 flex flex-col items-center justify-center text-center shadow-2xl">
+                    <div class="w-32 h-32 rounded-full bg-cyan-500/10 border-2 border-cyan-400/40 flex items-center justify-center relative mb-6">
+                        <i class="fa-solid fa-lock text-6xl text-cyan-400 animate-pulse"></i>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Ecosistema de Datos Confiable</h3>
+                    <p class="text-xs text-slate-400 mb-4">Interacción continua entre la norma jurídica, el algoritmo y la responsabilidad humana.</p>
+                    
+                    <div class="grid grid-cols-3 gap-2 w-full text-xs">
+                        <div class="p-2 rounded-lg bg-slate-800/60 border border-slate-700 text-slate-300">
+                            <i class="fa-solid fa-scale-balanced text-cyan-400 block text-base mb-1"></i> Ley 1581
+                        </div>
+                        <div class="p-2 rounded-lg bg-slate-800/60 border border-slate-700 text-slate-300">
+                            <i class="fa-solid fa-brain text-indigo-400 block text-base mb-1"></i> Ética IA
+                        </div>
+                        <div class="p-2 rounded-lg bg-slate-800/60 border border-slate-700 text-slate-300">
+                            <i class="fa-solid fa-fingerprint text-emerald-400 block text-base mb-1"></i> Habeas Data
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2: FUNDAMENTOS DE LA ÉTICA DIGITAL -->
+    <section id="fundamentos" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 2 • Marco Conceptual</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Fundamentos de la Ética Digital</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+                <p class="text-slate-600 text-lg">
+                    La ética digital examina cómo los principios morales se aplican al diseño, desarrollo, recopilación y uso de tecnologías de la información.
+                </p>
+            </div>
+
+            <!-- Grid de Principios Eticos -->
+            <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-compass text-brand-500"></i> Principios Éticos Fundamentales
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Responsabilidad -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-hand-holding-hand"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">1. Responsabilidad</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Asunción deliberada de las consecuencias directas e indirectas que genera la recolección y tratamiento de datos personales en el entorno cibernético.
+                    </p>
+                </div>
+
+                <!-- Transparencia -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">2. Transparencia</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Divulgación clara, inteligible y accesible sobre cómo se procesan, almacenan y transfieren los datos de los titulares sin cláusulas oscuras.
+                    </p>
+                </div>
+
+                <!-- Honestidad -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">3. Honestidad</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Garantizar que la captura de datos responda fielmente a las finalidades legítimas declaradas al usuario, sin recurrir a patrones oscuros (*dark patterns*).
+                    </p>
+                </div>
+
+                <!-- Respeto -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-heart text-lg"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">4. Respeto</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Reconocimiento irrestricto de la dignidad humana y los derechos fundamentales de las personas sobre su esfera de privacidad digital.
+                    </p>
+                </div>
+
+                <!-- Justicia -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-scale-unbalanced"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">5. Justicia e Inclusión</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Distribución equitativa de los beneficios tecnológicos asegurando la eliminación de discriminaciones o sesgos algorítmicos.
+                    </p>
+                </div>
+
+                <!-- Autonomía -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">6. Autonomía Digital</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Facultad conferida a los ciudadanos para autodeterminar el destino de su información y ejercer control efectivo sobre su perfil digital.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Responsabilidad Individual vs Empresarial -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="p-8 rounded-2xl bg-slate-900 text-white shadow-xl">
+                    <div class="inline-block px-3 py-1 rounded-md bg-cyan-500/20 text-cyan-400 text-xs font-bold uppercase mb-4">Perspectiva Individual</div>
+                    <h4 class="text-xl font-bold mb-3">Responsabilidad del Ciudadano Digital</h4>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-cyan-400 mt-1"></i>
+                            <span>Configurar conscientemente los niveles de privacidad en plataformas.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-cyan-400 mt-1"></i>
+                            <span>Verificar fuentes para no propagar noticias falsas o desinformación.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-cyan-400 mt-1"></i>
+                            <span>Respetar la propiedad intelectual y los datos ajenos (*Sharenting* responsable).</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-brand-900 text-white shadow-xl">
+                    <div class="inline-block px-3 py-1 rounded-md bg-amber-500/20 text-amber-400 text-xs font-bold uppercase mb-4">Perspectiva Organizacional</div>
+                    <h4 class="text-xl font-bold mb-3">Responsabilidad Social Empresarial (RSE)</h4>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
+                            <span>Implementar privacidad por diseño y por defecto (*Privacy by Design*).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
+                            <span>No lucrarse vendiendo datos sin consentimiento explícito y previo.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
+                            <span>Auditar algoritmos para prevenir sesgos y garantizar la ciberseguridad corporativa.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dilemas Éticos Desplegables -->
+            <div class="space-y-4">
+                <h3 class="text-xl font-bold text-slate-900 mb-4">Dilemas Éticos Contemporáneos (Casos de Estudio Didácticos)</h3>
+                
+                <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <button type="button" onclick="toggleAccordion('dilema1')" class="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 text-left font-bold text-slate-800 transition-all cursor-pointer">
+                        <span class="pr-4">Dilema A: Monetización de datos vs. Privacidad del usuario en Apps "Gratuitas"</span>
+                        <i id="icon-dilema1" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 shrink-0"></i>
+                    </button>
+                    <div id="dilema1" class="hidden p-5 bg-white border-t border-slate-200 text-sm text-slate-600 leading-relaxed transition-all">
+                        <strong class="text-slate-900 block mb-2">Escenario:</strong> Una aplicación móvil de salud mental ofrece servicios gratuitos pero vende métricas agregadas de hábitos emocionales a corredores de datos (*data brokers*).
+                        <br><strong class="text-slate-900 block mt-2">Análisis Ético:</strong> Vulneración de la transparencia y explotación de datos extremadamente sensibles bajo la falacia del consentimiento en términos y condiciones ilegibles.
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <button type="button" onclick="toggleAccordion('dilema2')" class="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 text-left font-bold text-slate-800 transition-all cursor-pointer">
+                        <span class="pr-4">Dilema B: Reconocimiento Facial en Espacios Públicos y Vigilancia Masiva</span>
+                        <i id="icon-dilema2" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 shrink-0"></i>
+                    </button>
+                    <div id="dilema2" class="hidden p-5 bg-white border-t border-slate-200 text-sm text-slate-600 leading-relaxed transition-all">
+                        <strong class="text-slate-900 block mb-2">Escenario:</strong> Gobiernos locales instalan cámaras biométricas en áreas públicas para prevenir delitos sin consultar a la ciudadanía.
+                        <br><strong class="text-slate-900 block mt-2">Análisis Ético:</strong> Tensión entre la seguridad pública colectiva y la pérdida del anonimato, la libertad de asociación y el derecho intrínseco al libre desarrollo en espacios urbanos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 3: PRIVACIDAD Y PROTECCIÓN DE DATOS -->
+    <section id="privacidad" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 3 • Definiciones Esenciales</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Privacidad y Protección de Datos</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <!-- Privacidad vs Seguridad Matrix -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-600 font-bold text-xl">
+                        <i class="fa-solid fa-user-lock"></i> Privacidad Digital
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Es el <strong>derecho del individuo</strong> a decidir qué datos comparte, con quién, bajo qué condiciones y para qué propósitos específicos. Representa la autodeterminación informativa.
+                    </p>
+                    <div class="p-3 bg-cyan-50 rounded-lg text-xs text-cyan-800 font-medium">
+                        Ejemplo: Poder decidir que una plataforma no comparta tu historial de navegación con anunciantes.
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4 text-indigo-600 font-bold text-xl">
+                        <i class="fa-solid fa-vault"></i> Seguridad Digital
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Corresponde a los <strong>mecanismos técnicos, organizativos y físicos</strong> (cifrado, firewalls, contraseñas) destinados a proteger la información contra accesos no autorizados o ataques cibernéticos.
+                    </p>
+                    <div class="p-3 bg-indigo-50 rounded-lg text-xs text-indigo-800 font-medium">
+                        Ejemplo: Cifrado de extremo a extremo en WhatsApp para evitar que terceros intercepten las conversaciones.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tipos de Datos Personales -->
+            <h3 class="text-xl font-bold text-slate-900 mb-6">Clasificación Legal de los Datos</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white p-5 rounded-xl border border-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 font-bold text-xs block w-fit mb-3">PÚBLICOS</span>
+                    <h4 class="font-bold text-slate-900 mb-2">Datos Públicos</h4>
+                    <p class="text-xs text-slate-600">Aquellos relativos al estado civil de las personas, datos contenidos en registros públicos o sentencias ejecutoriadas (Ej: Cédula, datos del RUNT).</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 font-bold text-xs block w-fit mb-3">SEMIPRIVADOS</span>
+                    <h4 class="font-bold text-slate-900 mb-2">Datos Semiprivados</h4>
+                    <p class="text-xs text-slate-600">Aquellos que no tienen naturaleza pública ni sensible y cuyo conocimiento interesa al titular y a cierto sector (Ej: Historial crediticio en Datacrédito).</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-700 font-bold text-xs block w-fit mb-3">PRIVADOS</span>
+                    <h4 class="font-bold text-slate-900 mb-2">Datos Privados</h4>
+                    <p class="text-xs text-slate-600">Información de carácter íntimo o reservado que solo es relevante para el titular (Ej: Fotografía personal en la galería, documentos de uso personal).</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 border-l-4 border-l-red-500">
+                    <span class="px-2.5 py-1 rounded bg-red-100 text-red-700 font-bold text-xs block w-fit mb-3">SENSIBLES</span>
+                    <h4 class="font-bold text-slate-900 mb-2">Datos Sensibles</h4>
+                    <p class="text-xs text-slate-600">Información que afecta la intimidad o cuyo uso indebido genera discriminación (Ej: Datos biométricos, orientación sexual, historia clínica, religión).</p>
+                </div>
+            </div>
+
+            <!-- Huella Digital y Tracking -->
+            <div class="bg-slate-900 text-white rounded-3xl p-8 lg:p-12 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider">Concepto Clave</span>
+                        <h3 class="text-2xl sm:text-3xl font-bold">La Huella Digital y las Cookies de Seguimiento</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Cada interacción en la web deja un rastro imborrable: direcciones IP, preferencias de búsqueda, tiempos de permanencia y geolocalización. Las <strong>Cookies</strong> y las tecnologías de rastreo recopilan esta información para construir perfiles predictivos con fines comerciales o de comportamiento.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 text-xs pt-2">
+                            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700">
+                                <strong class="text-cyan-400 block mb-1">Huella Pasiva</strong>
+                                Recopilada automáticamente (IP, navegador, resolución de pantalla).
+                            </div>
+                            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700">
+                                <strong class="text-cyan-400 block mb-1">Huella Activa</strong>
+                                Publicada voluntariamente (redes sociales, comentarios, formularios).
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="p-6 bg-slate-800/80 rounded-2xl border border-slate-700 text-center w-full">
+                            <i class="fa-solid fa-cookie-bite text-5xl text-amber-400 mb-4"></i>
+                            <h4 class="font-bold text-lg text-white mb-2">Consentimiento Informado</h4>
+                            <p class="text-xs text-slate-300">
+                                Debe ser <strong>Previo, Expreso e Informado</strong>. El silencio o la casilla preactivada NO constituyen aceptación legal válida bajo la norma colombiana.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 4: REGULACIÓN DIGITAL Y MARCO NORMATIVO (COLOMBIA) -->
+    <section id="normativa" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 4 • Marco Jurídico Oficial</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Regulación Digital en Colombia y Estándares Internacionales</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+                <p class="text-slate-600 text-base">
+                    Análisis riguroso de la legislación colombiana vigente en materia de Habeas Data, Protección de Datos y Delitos Informáticos, verificada mediante fuentes de la SIC y el MinTIC.
+                </p>
+            </div>
+
+            <!-- Grid de Leyes Colombianas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                
+                <!-- Constitución Art 15 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-brand-100 text-brand-800 rounded-full font-bold text-xs">Carta Magna (1991)</span>
+                        <i class="fa-solid fa-book-bookmark text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Constitución Política de Colombia - Artículo 15</h3>
+                    <p class="text-xs font-semibold text-slate-500 mb-3">Derecho Fundamental al Intimidad y Habeas Data</p>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Consagra el derecho de todas las personas a conocer, actualizar y rectificar las informaciones que se hayan recogido sobre ellas en bancos de datos y en archivos de entidades públicas y privadas.
+                    </p>
+                    <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700">
+                        <strong>Ejemplo práctico:</strong> Iniciar una acción de tutelamiento cuando una entidad bancaria se niega a eliminar información inexacta del sistema.
+                    </div>
+                </div>
+
+                <!-- Ley 1581 de 2012 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs">Ley General de Protección de Datos</span>
+                        <i class="fa-solid fa-gavel text-emerald-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Ley 1581 de 2012</h3>
+                    <p class="text-xs font-semibold text-slate-500 mb-3">Expedida el 17 de octubre de 2012</p>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Regula el régimen general de protección de datos personales en Colombia. Establece los principios rectorales (finalidad, libertad, veracidad, seguridad, confidencialidad) y crea la Delegatura para la Protección de Datos de la SIC.
+                    </p>
+                    <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700">
+                        <strong>Obligación Clave:</strong> Registro Nacional de Bases de Datos (RNBD) para empresas y políticas claras de privacidad.
+                    </div>
+                </div>
+
+                <!-- Decreto 1074 de 2015 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-xs">Decreto Único Reglamentario</span>
+                        <i class="fa-solid fa-file-contract text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Decreto 1074 de 2015 (Capítulo 25)</h3>
+                    <p class="text-xs font-semibold text-slate-500 mb-3">Reglamentación de la Ley 1581</p>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Compila los aspectos reglamentarios de la Ley 1581 de 2012 (anterior Decreto 1377 de 2013). Detalla el contenido mínimo de las autorizaciones, avisos de privacidad y políticas de tratamiento.
+                    </p>
+                    <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700">
+                        <strong>Aplicación:</strong> Procedimientos estandarizados para que el titular ejerza la revocatoria del consentimiento.
+                    </div>
+                </div>
+
+                <!-- Ley 1273 de 2009 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full font-bold text-xs">Ley de Delitos Informáticos</span>
+                        <i class="fa-solid fa-user-ninja text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Ley 1273 de 2009</h3>
+                    <p class="text-xs font-semibold text-slate-500 mb-3">Modifica el Código Penal Colombiano</p>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Tipifica como delitos penalizables con cárcel conductas cibernéticas como el acceso abusivo a un sistema informático, interceptación de datos, daño informático, software malicioso y suplantación de sitios web.
+                    </p>
+                    <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700">
+                        <strong>Ejemplo de aplicación:</strong> Sanciones penales para atacantes que despliegan campañas de Phishing bancario.
+                    </div>
+                </div>
+
+                <!-- Ley 1266 de 2008 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition-all md:col-span-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full font-bold text-xs">Habeas Data Financiero</span>
+                        <i class="fa-solid fa-building-columns text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Ley 1266 de 2008 (Ley de Habeas Data Financiero)</h3>
+                    <p class="text-xs font-semibold text-slate-500 mb-3">Regula la Información Comercial y Crediticia</p>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Regula la administración de la información financiera, crediticia, comercial y de servicios. Garantiza el tiempo máximo de permanencia de reportes negativos en centrales de riesgo (complementada por la Ley "Borrón y Cuenta Nueva" Ley 2157 de 2021).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Estándar Internacional GDPR -->
+            <div class="p-8 rounded-3xl bg-slate-900 text-white flex flex-col md:flex-row items-center gap-8 shadow-xl">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-4xl shrink-0">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+                <div>
+                    <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider">Referencia Internacional</span>
+                    <h3 class="text-2xl font-bold mb-2">GDPR / RGPD (Reglamento General de Protección de Datos de la UE)</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Estándar global de privacidad aprobado en la Unión Europea (2016/679). Posee carácter extraterritorial: aplica a cualquier empresa mundial que procese datos de residentes europeos. Introduce multas de hasta el 4% del facturamiento global o 20 millones de euros, sirviendo como modelo para la actualización de la Ley 1581 de Colombia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 5: RIESGOS Y PROBLEMÁTICAS DIGITALES -->
+    <section id="riesgos" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 5 • Amenazas Modernas</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Riesgos y Problemáticas Digitales</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <!-- Grid de Amenazas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Suplantacion -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Suplantación de Identidad</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Uso no autorizado de credenciales y datos personales para hacerse pasar por otra persona en trámites bancarios o redes.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Habilitar Autenticación de Doble Factor (2FA) y no compartir códigos SMS OTP.
+                    </div>
+                </div>
+
+                <!-- Filtraciones -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Filtración de Datos (*Data Leaks*)</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Exposición no intencionada o hackeo masivo de bases de datos que terminan vendiéndose en la *Dark Web*.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Utilizar gestores de contraseñas y claves robustas e independientes por servicio.
+                    </div>
+                </div>
+
+                <!-- Ciberacoso -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Ciberacoso y Doxxing</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Hostigamiento en línea y publicación deliberada de información privada de una víctima para promover su linchamiento digital.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Mantener perfiles privados y limitar la exposición de rutinas diarias y ubicación.
+                    </div>
+                </div>
+
+                <!-- Vigilancia sin Consentimiento -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Vigilancia y Rastreo Oculto</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Monitoreo constante de movimientos e historial mediante Spyware, Stalkerware o balizas de geolocalización.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Revisar permisos de ubicación en aplicaciones e instalar soluciones antimalware.
+                    </div>
+                </div>
+
+                <!-- Manipulacion de Informacion -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Manipulación / Fake News</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Distribución orquestada de desinformación con el fin de alterar la opinión pública o polarizar comunidades.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Contrastar información con fuentes oficiales antes de compartir (*Fact-Checking*).
+                    </div>
+                </div>
+
+                <!-- Fraude Digital -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-lg">Ingeniería Social / Phishing</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Técnicas de manipulación psicológica para engañar al usuario y lograr que entregue información bancaria o claves.</p>
+                    <div class="p-3 bg-slate-50 rounded-lg text-xs">
+                        <strong class="text-slate-800 block">Prevención:</strong> Inspeccionar minuciosamente el dominio URL de los correos recibidos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 6: INTELIGENCIA ARTIFICIAL Y RESPONSABILIDAD ÉTICA -->
+    <section id="ia-etica" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 6 • Frontera Tecnológica</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Inteligencia Artificial y Desafíos Éticos</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+                <div class="lg:col-span-6 space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-900">El dilema del entrenamiento algorítmico</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Los modelos de Lenguaje y Visión por Computadora requieren volúmenes masivos de datos para su entrenamiento (*Scraping web*). Esto suscita graves dilemas éticos relacionados con el uso de datos personales y obras protegidas sin autorización previa ni derecho al olvido.
+                    </p>
+                    
+                    <div class="space-y-3 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-arrows-split-up-and-left text-brand-500"></i> Sesgos Algorítmicos
+                            </h4>
+                            <p class="text-xs text-slate-600 mt-1">Si los datos de entrenamiento contienen prejuicios históricos, los sistemas automatizados perpetuarán la discriminación en selección de personal o créditos.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-masks-theater text-brand-500"></i> Deepfakes y Suplantación Sintética
+                            </h4>
+                            <p class="text-xs text-slate-600 mt-1">Generación de audio y video hiperrealista sin consentimiento que distorsiona la verdad e vulnera los derechos de imagen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-900 to-brand-900 text-white space-y-6 shadow-2xl">
+                        <h4 class="text-xl font-bold text-cyan-400 border-b border-slate-700 pb-4">Decálogo para un Uso Responsable de la IA</h4>
+                        <ul class="space-y-4 text-xs">
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0">1</span>
+                                <span><strong>Explicabilidad:</strong> Exigir que los algoritmos de toma de decisiones automatizadas expliquen su lógica base.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0">2</span>
+                                <span><strong>Supervisión Humana (*Human-in-the-Loop*):</strong> Ningún sistema IA debe tomar decisiones críticas de forma totalmente autónoma.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0">3</span>
+                                <span><strong>Anonimización Estricta:</strong> Eliminar identificadores directos antes de ingresar información confidencial a modelos de lenguaje comercial.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 7: CASOS EMPRESARIALES DOCUMENTADOS Y EVALUADOS -->
+    <section id="casos" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 7 • Evaluación Práctica de Casos</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Estudios de Caso Empresariales</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+                <p class="text-slate-600 text-base">
+                    Análisis de eventos documentados donde decisiones corporativas afectaron masivamente la privacidad y la confianza pública.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Caso 1: Cambridge Analytica / Facebook -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded bg-red-100 text-red-700 font-bold text-xs">CASO REAL DOCUMENTADO</span>
+                            <span class="text-xs text-slate-400 font-semibold">2018</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Cambridge Analytica & Facebook</h3>
+                        <p class="text-xs text-slate-500 mb-4">Perfilamiento psicográfico masivo sin consentimiento explícito.</p>
+                        
+                        <div class="space-y-3 text-xs text-slate-600">
+                            <div>
+                                <strong class="text-slate-800 block">Conflicto Ético / Normativo:</strong>
+                                Cosecha irrestricta de datos de 87 millones de usuarios a través del API de Graph para influir en elecciones políticas.
+                            </div>
+                            <div>
+                                <strong class="text-slate-800 block">Consecuencias:</strong>
+                                Sanción por USD $5.000 millones por parte de la FTC de EE. UU. y pérdida drástica de valor en bolsa y reputación.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-200 text-xs text-brand-800 font-medium">
+                        <strong>Reflexión:</strong> Los datos personales no pueden ser tratados como activos de manipulación política o social.
+                    </div>
+                </div>
+
+                <!-- Caso 2: Filtracion Equifax -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded bg-red-100 text-red-700 font-bold text-xs">CASO REAL DOCUMENTADO</span>
+                            <span class="text-xs text-slate-400 font-semibold">2017</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Filtración de Datos en Equifax</h3>
+                        <p class="text-xs text-slate-500 mb-4">Negligencia en la actualización de vulnerabilidades de ciberseguridad.</p>
+                        
+                        <div class="space-y-3 text-xs text-slate-600">
+                            <div>
+                                <strong class="text-slate-800 block">Conflicto Ético / Normativo:</strong>
+                                Omisión del parche de seguridad Apache Struts, exponiendo datos de 147 millones de consumidores (SSN, fechas de nacimiento).
+                            </div>
+                            <div>
+                                <strong class="text-slate-800 block">Consecuencias:</strong>
+                                Compensación legal de USD $700 millones e imperativo legal de reforzar controles de seguridad interna.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-200 text-xs text-brand-800 font-medium">
+                        <strong>Reflexión:</strong> La falta de mantenimiento cibernético constituye una vulneración directa al principio de seguridad de la información.
+                    </div>
+                </div>
+
+                <!-- Caso 3: Caso Local Colombia - Sanción SIC -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-700 font-bold text-xs">CASO COLOMBIA (SIC)</span>
+                            <span class="text-xs text-slate-400 font-semibold">Reciente</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Sanción a Empresa Comercial por Comercio Directo</h3>
+                        <p class="text-xs text-slate-500 mb-4">Tratamiento de datos sin autorización previa del titular.</p>
+                        
+                        <div class="space-y-3 text-xs text-slate-600">
+                            <div>
+                                <strong class="text-slate-800 block">Conflicto Ético / Normativo:</strong>
+                                Envío de mensajes publicitarios masivos sin que los clientes hubiesen otorgado la autorización bajo la Ley 1581.
+                            </div>
+                            <div>
+                                <strong class="text-slate-800 block">Consecuencias:</strong>
+                                Multa impuesta por la SIC y orden administrativa obligatoria para la eliminación inmediata de la base de datos ilegal.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-200 text-xs text-brand-800 font-medium">
+                        <strong>Reflexión:</strong> La legislación colombiana vigila y sanciona activamente el spam comercial sin consentimiento.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 8: APLICACIÓN PRÁCTICA E INTERACTIVIDAD (TALLER / EVALUACIÓN) -->
+    <section id="taller" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 8 • Comprobación de Aprendizajes</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Evaluación Interactiva de Conocimiento</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+                <p class="text-slate-600 text-sm">Responda a las siguientes preguntas y escenarios para verificar su grado de apropiación conceptual.</p>
+            </div>
+
+            <!-- Quiz Container -->
+            <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-xl space-y-8" id="quizContainer">
+                
+                <!-- Pregunta 1 -->
+                <div class="space-y-3" id="q1-block">
+                    <h4 class="font-bold text-slate-900 text-base">1. Según la Ley 1581 de 2012 en Colombia, ¿el silencio del usuario al recibir un formulario se considera como una autorización válida?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer('q1', false, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">Sí, se asume consentimiento tácito.</button>
+                        <button onclick="checkAnswer('q1', true, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">No, la autorización debe ser previa, expresa e informada.</button>
+                    </div>
+                    <div id="q1-feedback" class="hidden p-3 rounded-lg text-xs font-semibold"></div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="space-y-3 border-t border-slate-200 pt-6" id="q2-block">
+                    <h4 class="font-bold text-slate-900 text-base">2. ¿Qué norma legal colombiana creó los tipos penales para sancionar el acceso abusivo a sistemas informáticos?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer('q2', true, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">Ley 1273 de 2009 (Delitos Informáticos).</button>
+                        <button onclick="checkAnswer('q2', false, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">Ley 1266 de 2008 (Habeas Data Financiero).</button>
+                    </div>
+                    <div id="q2-feedback" class="hidden p-3 rounded-lg text-xs font-semibold"></div>
+                </div>
+
+                <!-- Pregunta 3 (Escenario) -->
+                <div class="space-y-3 border-t border-slate-200 pt-6" id="q3-block">
+                    <h4 class="font-bold text-slate-900 text-base">3. Escenario: Tu empresa planea desplegar un algoritmo de selección de personal usando historial previo. ¿Cuál es la acción éticamente correcta?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer('q3', false, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">Lanzarlo directamente para ahorrar costos de contratación.</button>
+                        <button onclick="checkAnswer('q3', true, this)" class="p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 font-medium text-xs text-left transition">Auditar previamente el algoritmo para evitar sesgos y mantener supervisión humana.</button>
+                    </div>
+                    <div id="q3-feedback" class="hidden p-3 rounded-lg text-xs font-semibold"></div>
+                </div>
+
+                <!-- Botón Finalizar Quiz -->
+                <div class="pt-4 flex justify-between items-center border-t border-slate-200">
+                    <span id="scoreDisplay" class="text-sm font-bold text-slate-700">Puntuación: 0 / 3</span>
+                    <button onclick="resetQuiz()" class="px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-xs transition">Reiniciar Evaluación</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 9: CONCLUSIONES -->
+    <section id="conclusiones" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider block mb-2">Sección 9 • Síntesis Reflexiva</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Conclusiones del Artefacto Educativo</h2>
+                <div class="w-16 h-1 bg-cyan-400 mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="p-6 rounded-2xl dark-glass border border-slate-700">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-2xl mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">La Privacidad es un Derecho Fundamental</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">No se trata de "no tener nada que ocultar", sino de preservar la autonomía personal, la libertad de pensamiento y la dignidad en entornos computacionales.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl dark-glass border border-slate-700">
+                    <i class="fa-solid fa-scale-balanced text-amber-400 text-2xl mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">Cumplimiento Legal y Ético</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Las normas colombianas (Ley 1581) imponen límites legales, pero la ética corporativa trasciende la ley obligando al respeto transparente por el usuario.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl dark-glass border border-slate-700">
+                    <i class="fa-solid fa-users text-indigo-400 text-2xl mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">Ciudadanía Digital Activa</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Construir un ecosistema cibernético seguro requiere usuarios educados e instituciones comprometidas con la gobernanza de datos.</p>
+                </div>
+            </div>
+
+            <!-- Box de Reflexión -->
+            <div class="p-8 rounded-3xl bg-gradient-to-r from-brand-900 to-indigo-950 border border-slate-700 text-center max-w-3xl mx-auto">
+                <h3 class="text-xl font-bold mb-3">Reflexión Final para el Estudiante</h3>
+                <p class="text-sm text-slate-300 italic mb-6">
+                    «Al presionar "Aceptar términos y condiciones", ¿estás ejerciendo tu autonomía digital o simplemente entregando tu identidad informativa al algoritmo?»
+                </p>
+                <a href="#inicio" class="inline-flex items-center px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold text-xs uppercase tracking-wider transition">
+                    Volver al Inicio <i class="fa-solid fa-arrow-up ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 10: BIBLIOGRAFÍA Y CRÉDITOS (APA 7ma Edición) -->
+    <section id="bibliografia" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-500 font-bold text-xs uppercase tracking-wider block mb-2">Sección 10 • Rigor Académico</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Referencias Bibliográficas (APA 7.ª ed.)</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 max-w-4xl mx-auto space-y-4 text-xs text-slate-700 font-mono">
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Asamblea Nacional Constituyente. (1991). <em>Constitución Política de Colombia</em>. Art. 15. Gaceta Constitucional No. 116.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Congreso de la República de Colombia. (2008, 31 de diciembre). <em>Ley 1266 de 2008: Por la cual se dictan las disposiciones generales del hábeas data y se regula el manejo de la información contenida en bases de datos personales</em>. Diario Oficial No. 47.219.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Congreso de la República de Colombia. (2009, 5 de enero). <em>Ley 1273 de 2009: Por medio de la cual se modifica el Código Penal y se crea un bien jurídico tutelado - de la protección de la información y de los datos</em>. Diario Oficial No. 47.223.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Congreso de la República de Colombia. (2012, 17 de octubre). <em>Ley 1581 de 2012: Por la cual se dictan disposiciones generales para la protección de datos personales</em>. Diario Oficial No. 48.587.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Presidencia de la República de Colombia. (2015, 26 de mayo). <em>Decreto 1074 de 2015: Decreto Único Reglamentario del Sector Comercio, Industria y Turismo</em>.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Superintendencia de Industria y Comercio - SIC. (2023). <em>Guía para el Tratamiento de Datos Personales</em>. Bogotá D.C.: Delegatura para la Protección de Datos Personales.
+                </p>
+                <p class="pl-8 -indent-8 leading-relaxed">
+                    Unión Europea. (2016). <em>Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (Reglamento General de Protección de Datos - RGPD)</em>. Diario Oficial de la Unión Europea.
+                </p>
+            </div>
+
+            <!-- Créditos del Proyecto -->
+            <div class="mt-12 text-center text-xs text-slate-500 space-y-1">
+                <p class="font-bold text-slate-700">Universidad Piloto de Colombia • Proyecto de Artefacto Educativo Digital</p>
+                <p>Desarrollado con HTML5, Tailwind CSS, FontAwesome & QRCode.js</p>
+                <p>© 2026 - Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal del Código QR -->
+    <div id="qrModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center space-y-4 shadow-2xl relative">
+            <button onclick="toggleQRModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-qrcode"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">Código QR de la Aplicación</h3>
+            <p class="text-xs text-slate-500">Escanee este código con su teléfono celular para acceder a esta aplicación web en tiempo real.</p>
+            
+            <div class="flex justify-center p-4 bg-slate-50 rounded-2xl border border-slate-200" id="qrcode"></div>
+
+            <div class="text-xs text-slate-400 break-all font-mono" id="currentUrlText"></div>
+            
+            <button onclick="toggleQRModal()" class="w-full py-3 bg-brand-900 hover:bg-brand-800 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript para Interactividad y Lógica -->
+    <script>
+        // Manejo del Scroll progress bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+        };
+
+        // Toggle del menú móvil
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Acordeón dinámico corregido para eventos táctiles y de ratón
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (!content || !icon) return;
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Lógica del Cuestionario Interactivos
+        let score = 0;
+        const answered = { q1: false, q2: false, q3: false };
+
+        function checkAnswer(qId, isCorrect, btn) {
+            if (answered[qId]) return;
+            answered[qId] = true;
+
+            const feedback = document.getElementById(qId + '-feedback');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                score++;
+                btn.classList.remove('bg-white', 'border-slate-300');
+                btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                feedback.classList.add('bg-emerald-100', 'text-emerald-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> ¡Correcto! Has seleccionado la respuesta éticamente adecuada y legalmente fundamentada.';
+            } else {
+                btn.classList.remove('bg-white', 'border-slate-300');
+                btn.classList.add('bg-red-100', 'border-red-500', 'text-red-900');
+                feedback.classList.add('bg-red-100', 'text-red-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> Incorrecto. Revisa el contenido de la sección correspondiente para profundizar.';
+            }
+
+            document.getElementById('scoreDisplay').innerText = `Puntuación: ${score} / 3`;
+        }
+
+        function resetQuiz() {
+            score = 0;
+            answered.q1 = false;
+            answered.q2 = false;
+            answered.q3 = false;
+            document.getElementById('scoreDisplay').innerText = `Puntuación: 0 / 3`;
+
+            ['q1', 'q2', 'q3'].forEach(qId => {
+                const feedback = document.getElementById(qId + '-feedback');
+                feedback.classList.add('hidden');
+                feedback.className = 'hidden p-3 rounded-lg text-xs font-semibold';
+            });
+        }
+
+        // Generación dinámica del Código QR
+        let qrGenerated = false;
+        function toggleQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.toggle('hidden');
+
+            if (!qrGenerated) {
+                const currentUrl = window.location.href;
+                document.getElementById('currentUrlText').innerText = currentUrl;
+                
+                new QRCode(document.getElementById("qrcode"), {
+                    text: currentUrl,
+                    width: 180,
+                    height: 180,
+                    colorDark : "#0f172a",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                qrGenerated = true;
+            }
+        }
+    </script>
+</body>
+</html>
+```
